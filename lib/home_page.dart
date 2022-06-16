@@ -18,18 +18,18 @@ class _ExampleState extends State<Example> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: 100,
             height: 100,
             child: RadialPersentWidget(
               percent: _currentSliderValue,
-              fillColor: Color.fromRGBO(28, 34, 86, 1.0),
-              lineColor: Color.fromRGBO(161, 233, 97, 1.0),
-              freeColor: Color.fromRGBO(56, 80, 72, 1.0),
+              fillColor: const Color.fromRGBO(28, 34, 86, 1.0),
+              lineColor: const Color.fromRGBO(161, 233, 97, 1.0),
+              freeColor: const Color.fromRGBO(56, 80, 72, 1.0),
               lineWidth: 8,
               child: Text(
                 '${(_currentSliderValue * 100).toStringAsFixed(0)}%',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ),
@@ -150,7 +150,7 @@ class MyPainter extends CustomPainter {
   }
 
   Rect calculateArcsRect(Size size) {
-    final lineMargin = 3;
+    const lineMargin = 3;
     final offset = lineWidth / 2 + lineMargin;
     final arcRect = Offset(offset, offset) &
         Size(
