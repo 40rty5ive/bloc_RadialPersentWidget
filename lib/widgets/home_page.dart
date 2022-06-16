@@ -37,16 +37,36 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Slider(
-              value: state,
-              max: 1,
-              onChanged: (double value) {
-                // setState(() {
-                //   _currentSliderValue = state;
-                // });
-                //sliderBloc.add(ChangeSlider(value));
-                sliderBloc.changeSlider(ChangeSlider(value));
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Slider(
+                value: state,
+                max: 1,
+                onChanged: (double value) {
+                  sliderBloc.changeSlider(ChangeSlider(value));
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Фон'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Лінія'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Вільна лінія'),
+              ),
             ),
           ],
         ),
