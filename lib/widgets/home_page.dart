@@ -2,6 +2,7 @@ import 'package:custom_paint/widgets/radial_persent_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/colors_radial_persent_widget_bloc.dart';
 import '../bloc/radial_persent_widget_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final sliderBloc = BlocProvider.of<RadialPersentWidgetBloc>(context);
+    final colorsBloc = BlocProvider.of<ColorsRadialPersentWidgetBloc>(context);
     return BlocBuilder<RadialPersentWidgetBloc, double>(
         builder: (BuildContext context, state) {
       return Center(
@@ -27,9 +29,9 @@ class _HomePageState extends State<HomePage> {
               height: 100,
               child: RadialPersentWidget(
                 percent: state,
-                fillColor: const Color.fromRGBO(28, 34, 86, 1.0),
-                lineColor: const Color.fromRGBO(161, 233, 97, 1.0),
-                freeColor: const Color.fromRGBO(56, 80, 72, 1.0),
+                fillColor: colorsBloc.getFillColor,
+                lineColor: colorsBloc.getLineColor,
+                freeColor: colorsBloc.getFreeColor,
                 lineWidth: 8,
                 child: Text(
                   '${(state * 100).toStringAsFixed(0)}%',
@@ -50,22 +52,29 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.fill),
                 child: const Text('Фон'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.line),
                 child: const Text('Лінія'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.freeLine),
                 child: const Text('Вільна лінія'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.reset),
+                child: const Text('Скинути'),
               ),
             ),
           ],
