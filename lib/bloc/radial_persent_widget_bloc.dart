@@ -11,11 +11,13 @@ class ChangeSlider extends MyEvent {
 }
 
 class RadialPersentWidgetBloc extends Bloc<MyEvent, double> {
-  double persent = 0;
+  double _persent = 0;
+
+  double get getPersent => _persent;
 
   RadialPersentWidgetBloc(double initialState) : super(initialState);
 
   void changeSlider(ChangeSlider event) {
-    emit(persent = event.percent);
+    emit(_persent = event.percent);
   }
 }

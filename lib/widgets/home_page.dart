@@ -18,68 +18,78 @@ class _HomePageState extends State<HomePage> {
     final sliderBloc = BlocProvider.of<RadialPersentWidgetBloc>(context);
     final colorsBloc = BlocProvider.of<ColorsRadialPersentWidgetBloc>(context);
     return BlocBuilder<RadialPersentWidgetBloc, double>(
+        bloc: sliderBloc,
         builder: (BuildContext context, state) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: RadialPersentWidget(
-                percent: state,
-                fillColor: colorsBloc.getFillColor,
-                lineColor: colorsBloc.getLineColor,
-                freeColor: colorsBloc.getFreeColor,
-                lineWidth: 8,
-                child: Text(
-                  '${(state * 100).toStringAsFixed(0)}%',
-                  style: const TextStyle(color: Colors.white),
+          return BlocBuilder<ColorsRadialPersentWidgetBloc, Color>(
+            bloc: colorsBloc,
+            builder: (context, state) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: RadialPersentWidget(
+                        percent: sliderBloc.getPersent,
+                        fillColor: colorsBloc.getFillColor,
+                        lineColor: colorsBloc.getLineColor,
+                        freeColor: colorsBloc.getFreeColor,
+                        lineWidth: 8,
+                        child: Text(
+                          '${(sliderBloc.getPersent * 100).toStringAsFixed(0)}%',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Slider(
+                        value: sliderBloc.getPersent,
+                        max: 1,
+                        onChanged: (double value) {
+                          sliderBloc.changeSlider(ChangeSlider(value));
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            colorsBloc.buttonPresed(ButtonPressEvent.fill),
+                        child: const Text('Фон'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            colorsBloc.buttonPresed(ButtonPressEvent.line),
+                        child: const Text('Лінія'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            colorsBloc.buttonPresed(ButtonPressEvent.freeLine),
+                        child: const Text('Вільна лінія'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            colorsBloc.buttonPresed(ButtonPressEvent.reset),
+                        child: const Text('Скинути'),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Slider(
-                value: state,
-                max: 1,
-                onChanged: (double value) {
-                  sliderBloc.changeSlider(ChangeSlider(value));
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.fill),
-                child: const Text('Фон'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.line),
-                child: const Text('Лінія'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.freeLine),
-                child: const Text('Вільна лінія'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () => colorsBloc.buttonPresed(ButtonPressEvent.reset),
-                child: const Text('Скинути'),
-              ),
-            ),
-          ],
-        ),
-      );
-    });
+              );
+            },
+          );
+        });
   }
 }
